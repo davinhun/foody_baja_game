@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('bet.title')?:'Bet page'}"></title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script type="text/javascript" th:inline="javascript" th:src="@{../js/calcDateAndLocalize.js}"></script>
+
+    <script th:inline="javascript">
+function showModal(match,guess, guessValue) {
+  document.getElementById('modalText').innerHTML = "Az alábbi meccsre fogadsz:";
+  document.getElementById('match').value=match.id;
+  document.getElementById('guess').value=guess;
+  document.getElementById('point').value='';
+  document.getElementById('team1Img').src=match.team1.flagLink;
+  document.getElementById('team2Img').src=match.team2.flagLink;
+
+  document.getElementById('guessValue').innerHTML=guessValue;
+  document.getElementById('team1Caption').innerHTML=match.team1.name;
+  document.getElementById('team2Caption').innerHTML=match.team2.name;
+
+  document.getElementById('betModal').style.display='block';
+}
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+
+    <div class="w3-container">
+        <div id="betModal" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('betModal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                    <br><br><br>
+                    <p class="header-centered-text" id="modalText"></p>
+                    <br>
+                    <form method="POST" th:object="${betModel}" th:action="@{/bet}" id="matchForm">
+                        <input type="hidden" id="guess" name="guess"/>
+                        <input type="hidden" id="match" name="match"/>
+
+                        <div class="text-center-align flags">
+                            <figure>
+                                <img class="img-table" id="team1Img"
+                                     onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+                                <figcaption id="team1Caption"></figcaption>
+                            </figure>
+                            <p class="modalText" style="padding-left: 50px;font-size: xx-large;margin-top: 15px;">VS</p>
+                            <figure>
+                                <img class="img-table" id="team2Img"
+                                     onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+                                <figcaption id="team2Caption"></figcaption>
+                            </figure>
+                        </div>
+                        <br>
+                        <div class="text-center-align">
+                            <p style="display:inline;" class="text-center-align boldText">A tipped:</p>
+                            <p style="display:inline;" id="guessValue" class="text-center-align guessValue"></p>
+                        </div>
+                        <br>
+                        <div class="text-center-align">
+                            <label class="custom-label text-center-align" for="point"
+                                   th:text="${#messages.msgOrNull('bet')?:'Bet'}"></label>
+                            <input class="radius-button modalResponsive" style="color: black;text-align: center;"
+                                   required type="number"
+                                   min="1" th:max="${pointAndRank.point}" id="point" name="point">
+                            <p class="modalText modalResponsive"
+                               th:text="${#messages.msgOrNull('point_plain')?:'Pont'}"></p>
+                            <input class="radius-button modalResponsive"
+                                   style="background: #e4002b; border-style: none;"
+                                   type="submit" th:value="${#messages.msgOrNull('submit')?:'Submit'}">
+                        </div>
+                        <br><br><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 class="center header-centered-text"> Tippelés</h1>
+    <br>
+
+    <div style="overflow-x: auto;">
+        <table class="center" style="width: 65%;">
+            <tr style="font-size: small;">
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('status')?:'status'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('group')?:'group'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('startDate')?:'start date'}"></th>
+                <th class="foodyTableCell" colspan="2" th:text="${#messages.msgOrNull('team1')?:'team1'}"></th>
+                <th class="foodyTableCell" colspan="2" th:text="${#messages.msgOrNull('team2')?:'team2'}"></th>
+                <th th:text="${#messages.msgOrNull('oddsTeam1')?:'oddsTeam1'}"></th>
+                <th th:text="${#messages.msgOrNull('oddsDraw')?:'draw odds'}"></th>
+                <th th:text="${#messages.msgOrNull('oddsTeam2')?:'oddsTeam2'}"></th>
+            </tr>
+            <tr class="header-centered-text bottom-padding" th:each="model : ${matchesWithBets} ">
+                <td th:text="${model.match.status}" class="status foodyTableCell"></td>
+                <td th:text="${model.match.group}" class="foodyTableCell"></td>
+                <td th:text="${model.match.startDate}" class="toLocalDate foodyTableCell"></td>
+                <td class="foodyTableCell">
+                    <img class="img-table" th:src="${model.match.team1.flagLink}"
+                         onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+                </td>
+                <td class="foodyTableCell" th:text="${model.match.team1.name}"></td>
+                <td class="foodyTableCell">
+                    <img class="img-table" th:src="${model.match.team2.flagLink}"
+                         onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+                </td>
+                <td class="foodyTableCell" th:text="${model.match.team2.name}"></td>
+                <td>
+                    <button class="center-button betButton" th:text="${model.match.oddsTeam1}"
+                            th:disabled="${model.match.status != 'available' || model.bet!=null || #execInfo.now.time > new java.util.Date(model.match.startDate) }"
+                            th:onclick="showModal([[${model.match}]],'team1',[[${model.match.team1.name}]])"></button>
+                </td>
+                <td>
+                    <button class="center-button betButton" th:text="${model.match.oddsDraw}"
+                            th:disabled="${model.match.status != 'available' || model.bet!=null || #execInfo.now.time > new java.util.Date(model.match.startDate) }"
+                            th:onclick="showModal([[${model.match}]],'draw','döntetlen')"></button>
+                </td>
+                <td>
+                    <button class="center-button betButton" th:text="${model.match.oddsTeam2}"
+                            th:disabled="${model.match.status != 'available' || model.bet!=null || #execInfo.now.time > new java.util.Date(model.match.startDate) }"
+                            th:onclick="showModal([[${model.match}]],'team2',[[${model.match.team2.name}]])"></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+
+
+INSERT into Team VALUES (1,'Katar','https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Qatar.svg/800px-Flag_of_Qatar.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (2,'Németország','https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/800px-Flag_of_Germany.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (3,'Dánia','https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Denmark.svg/512px-Flag_of_Denmark.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (4,'Brazília','https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/749px-Flag_of_Brazil.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (5,'Franciaország','https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/800px-Flag_of_France.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (6,'Belgium','https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Belgium_%28civil%29.svg/800px-Flag_of_Belgium_%28civil%29.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (7,'Horvátország','https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/800px-Flag_of_Croatia.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (8,'Spanyolország','https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/750px-Flag_of_Spain.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (9,'Szerbia','https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Flag_of_Serbia.svg/800px-Flag_of_Serbia.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (10,'Anglia','https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Flag_of_England.svg/800px-Flag_of_England.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (11,'Svájc','https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Switzerland.svg/512px-Flag_of_Switzerland.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (12,'Hollandia','https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_the_Netherlands.svg/800px-Flag_of_the_Netherlands.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (13,'Argentína','https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/800px-Flag_of_Argentina.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (14,'Irán','https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/630px-Flag_of_Iran.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (15,'Dél-Korea','https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/800px-Flag_of_South_Korea.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (16,'Japán','https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/800px-Flag_of_Japan.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (17,'Szaúd-Arábia','https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/800px-Flag_of_Saudi_Arabia.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (18,'Ecuador','https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Flag_of_Ecuador.svg/800px-Flag_of_Ecuador.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (19,'Uruguay','https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/800px-Flag_of_Uruguay.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (20,'Kanada','https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/800px-Flag_of_Canada.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (21,'Ghána','https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/800px-Flag_of_Ghana.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (22,'Szenegál','https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_Senegal.svg/800px-Flag_of_Senegal.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (23,'Portugália','https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/600px-Flag_of_Portugal.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (24,'Lengyelország','https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/640px-Flag_of_Poland.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (25,'Tunézia','https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/800px-Flag_of_Tunisia.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (26,'Marokkó','https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/800px-Flag_of_Morocco.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (27,'Kamerun','https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Flag_of_Cameroon.svg/800px-Flag_of_Cameroon.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (28,'Egyesült államok','https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/800px-Flag_of_the_United_States.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (29,'Mexikó','https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/800px-Flag_of_Mexico.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (30,'Wales','https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Flag_of_Wales.svg/800px-Flag_of_Wales.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (31,'Ausztrália','https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/800px-Flag_of_Australia.svg.png',1616251775,1616251775,'ADMIN');
+INSERT into Team VALUES (32,'Costa Rica','https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Costa_Rica_%28state%29.svg/800px-Flag_of_Costa_Rica_%28state%29.svg.png',1616251775,1616251775,'ADMIN');

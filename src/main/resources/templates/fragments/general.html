@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TPCRL6M');</script>
+    <!-- End Google Tag Manager -->
+    <meta name="facebook-domain-verification" content="vtfzl0zkhpesx6tuqd4wyh7u3ddiu5"/>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href='https://fonts.googleapis.com/css?family=Calibri' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Exo' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/main_9.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/social_media2.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+function switchClass() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+    </script>
+
+    <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '601350927135835');
+  fbq('track', 'PageView');
+
+
+    </script>
+
+</head>
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id=601350927135835&ev=PageView&noscript=1"/></noscript>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TPCRL6M"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<nav th:fragment="nav-bar" class="navbar" id="navDiv" style="border: 0;">
+
+    <div class="topnav foodynav" id="myTopnav">
+        <a class="boldText" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" href="/"><span
+                th:text="${#messages.msgOrNull('main.title')?:'Main page'}"></span></a>
+        <a class="boldText" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" href="/howToPlay"><span
+                th:text="${#messages.msgOrNull('howToPlay.title')?:'How to play?'}"></span></a>
+        <a class="boldText" sec:authorize="hasRole('ROLE_USER')" href="/invoice"><span
+                th:text="${#messages.msgOrNull('invoice.title')?:'Invoices'}"></span></a>
+
+        <a class="boldText" sec:authorize="hasRole('ROLE_USER')" href="/bet"><span
+                th:text="${#messages.msgOrNull('bet.title')?:'Bet page'}"></span></a>
+        <a class="boldText" sec:authorize="hasRole('ROLE_USER')" href="/result"><span
+                th:text="${#messages.msgOrNull('result.title')?:'Result page'}"></span></a>
+
+        <a class="boldText" sec:authorize="hasRole('ROLE_USER')" href="/toplist"><span
+                th:text="${#messages.msgOrNull('toplist.title')?:'Toplist'}"></span></a>
+
+        <a class="boldText" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')" href="/prices"><span
+                th:text="${#messages.msgOrNull('prices.title')?:'Prices'}"></span></a>
+
+
+
+        <a class="boldText" sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/match"><span
+                th:text="${#messages.msgOrNull('admin.title')?:'Admin panel'}"></span></a>
+        <a class="boldText" sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/toplist"><span
+                th:text="${#messages.msgOrNull('admin.toplist.title')?:'Admin Toplist'}"></span></a>
+        <a class="boldText" sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/codeUpload"><span
+                th:text="${#messages.msgOrNull('admin.codeUpload.title')?:'Admin code upload'}"></span></a>
+        <a class="boldText" sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/team"><span
+                th:text="${#messages.msgOrNull('team.title')?:'Team panel'}"></span></a>
+
+                <a href="javascript:void(0);" class="icon" onclick="switchClass()">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <div class="logout">
+                    <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post"
+                          class="form-inline">
+                        <a class="boldText" href="javascript:{}"
+                           onclick="document.getElementById('frmlogout').submit(); return false;"><span
+                                th:text="${#messages.msgOrNull('logout')?:'logout'}"></span></a>
+                    </form>
+                </div>
+            </div>
+            <div class="user-info">
+                <span class="boldText" th:text="${#messages.msgOrNull('welcome')?:'Welcome, '}"></span> <span class="boldText"
+                                                                                                              sec:authentication="name">> Anonymous </span>
+                <br>
+                <span class="boldText" th:text="${#messages.msgOrNull('rank')?:'Rank, '}"></span> <span class="boldText"
+                                                                                                        th:text="${pointAndRank != null} ? ${pointAndRank.rank}"></span>
+                <br>
+                <span class="boldText" th:text="${#messages.msgOrNull('point')?:'Point, '}"></span> <span class="boldText"
+                                                                                                          th:text="${pointAndRank != null} ? ${pointAndRank.point}"></span>
+            </div>
+
+
+        </nav>
+        <div class="col" layout:fragment="content">
+            <h1>This is the Layout's main section</h1>
+            <p>This content will be replaced if the page using the layout also defines a layout:fragment="content" segment. </p>
+        </div>
+
+<br><br>
+    <footer class="footer-center">
+        <b>Kövess minket közösségi oldalainkon!</b> <a href="https://www.facebook.com/foodyproduct" class="fa fa-facebook"></a>
+        <a href="https://www.instagram.com/foodyproductkft/?hl=hu" class="fa fa-instagram"></a>
+        <a href="https://www.tiktok.com/@foodyproduct">  <img src="/images/tiktok.png" style="width:42px;height:42px;" class="fa-tiktok"> </a>
+    </footer>
+
+</body>
+        </html>

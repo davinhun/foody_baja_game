@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('main.title')?:'Main'}"></title>
+    <style th:inline="text">
+    body{
+        background-image: url(/images/foodypromo_hatter.jpg);
+        background-size: cover;
+    }
+    </style>
+    <script th:inline="javascript">
+        $(window).on('load', function(e){
+  if (window.location.hash == '#_=_') {
+    window.location.hash = ''; // for older browsers, leaves a # behind
+    history.pushState('', document.title, window.location.pathname); // nice and clean
+    e.preventDefault(); // no page reload
+  }
+})
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+<div layout:fragment="content">
+
+    <div class="center">
+        <p style="font-size: large;">Kedves Játékos!
+            <br>
+            <br>
+            Köszönjük, hogy itt vagy, és részt veszel a Foody „Tippelj és utazz!” nyereményjátékában.
+            <br>
+            <br>
+            1. <b>VÁSÁROLJ</b> Foody termékeket<br>
+            2. <b>TÖLTSD FEL</b> az AP kódokat<br>
+            3. <b>SZEREZZ PONTOKAT</b> a feltöltött kódok és promóciók által!<br>
+            4. <b>JÁTSSZ!</b> Tippeld meg a VB meccsek végeredményét és gyűjtsd a pontokat!<br>
+            5. Ha jól játszol és a VB végén Tiéd a 3 legmagasabb pontszám egyike <b>NYERTÉL!</b>
+            <br>
+            <br>
+            Amennyiben elvesztetted pontjaidat, AP kód feltöltésével, pótolhatod azokat. A játék
+            részleteit a „Hogyan játsszak?” menüpontban találod.<br>
+            Felhívjuk figyelmedet, hogy a pontok jóváírása az egyenes kieséses szakaszban a rendes
+            játékidő (90 perc) eredménye alapján történik.<br>
+            <b>Izgalmakkal teli, jó szurkolást és sikeres játékot kíván a Foody!</b>
+            <br>
+            <br>
+            Jó szurkolást, sikeres játékot kíván a
+            <img th:src="@{/images/foody_logo.svg}" class="foody_logo" style="width: 10%;">
+        </p>
+    </div>
+    <br>
+    <br>
+</div>
+
+</body>
+
+</html>

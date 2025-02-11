@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('howToPlay.title')?:'How to play'}"></title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style th:inline="text">
+    body{
+        background-image: url(/images/foodypromo_hatter.jpg);
+        background-size: cover;
+    }
+    </style>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+<div layout:fragment="content">
+
+
+    <div class="center">
+
+        <p style="font-size: large;">
+            Kedves Játékos!
+            <br>
+            <br>
+
+            Köszönjük, hogy részt veszel a Foody nyereményjátékán!
+            Az alábbiakban hasznos információkat találsz a játék menetéről, melyet elolvasva
+            végigkalauzolunk Téged tippversenyünk tudnivalóiról.
+            <br>
+            <br>
+            Amennyiben követed a <a href="https://www.facebook.com/foodyproduct" style="color:#337ab7">Foody hivatalos Facebook oldalát</a>
+            a játék során további értékes információkhoz
+            juthatsz, amelyek segítségével jelentősen növelheted pontjaid számát.
+            <br>
+            <br>
+            1. A regisztrációval máris 5000 ponttal lehettél gazdagabb, a kreditek számát pedig a
+            Foody promóciós termékek vásárlásával és az azokban található kódok feltöltésével
+            növelheted!
+            <br>
+            - A regisztrációkor kapott 5000 kreditet belátásod szerint használhatod fel.
+            Felteheted akár 1 meccsre, vagy fogadhatsz az összes aktív mérkőzésre.
+            <br>
+            <br>
+            2. A KÓDOK FELTÖLTÉSÉHEZ keresd fel a www.foodypromo.hu oldalát, majd
+            kattints a KÓDFELTÖLTÉS menüpontra.
+            <br>
+            - Írd be a nyugtán található AP kódot, a nyugtakódot, a vásárlás dátumát és idejét, és
+            máris extra kreditet kapsz. Naponta csak ötször tölthetsz fel kódot és egy nyugtát
+            csak egy alkalommal használhatsz!
+            <br>
+            - <b>FONTOS! A vásárláskor kapott nyugtát a játék végéig őrizd meg!</b>
+            <br>
+            Amennyiben a blokkon nem szerepel a termék megnevezése, a csomagolásból
+            vágd ki a vonalkódot, mert a nyeremény átvételéhez azokat is be kell majd
+            mutatnod!
+            <br>
+            - Kreditet nem csak akkor tölthetsz fel, amikor elfogyott, hanem a játék időtartama
+            alatt minden nap. Fogadásokat csak 2022. november 10-től tehetsz, viszont a
+            pontgyűjtést a kódfeltöltéssel már 2022. november 1-től elkezdheted.
+            <br>
+            - Minél többször töltesz fel AP kódot, annál nagyobb az esélyed a főnyereményre.
+            Minden egyes extra feltöltésnél 1000 kreditet kapsz.
+            <br>
+            <br>
+            3. A TIPPELÉS menüpontban teheted meg a mérkőzéseket az általad megszerzett
+            kreditek felhasználásával.
+            <br>
+            - Tippeléskor tehetsz pontot az 1. vagy 2. csapat győzelmére, esetleg döntetlenre.
+            Mindhárom eseményhez rendel a program egy szorzót, amelyekre a táblázatban
+            rákattintva megteheted a téteted.
+            <br>
+            - A mérkőzés után, amennyiben helyesen tippeltél, a pontok a következők szerint
+            kerülnek jóváírásra: tét*nyereményszorzó=pontnyeremény.
+            Ha helytelen a tipp, akkor a tét elveszik.
+            <br>
+            - A mérkőzés eredmények jóváírása a rákövetkező nap 09:00-ig történik.
+            <br>
+            - Akkor se aggódj, ha véletlenül rosszul tippeltél és elvesztetted az összes pontodat!
+            Keresd fel a legközelebbi hipermarketet, supermarketet, boltot, ahol bármilyen
+            foody terméket találsz és vásárolj párat, hogy új kódokat tölthess fel, amikkel
+            ismét lehetőséged adódik nyerő tippet tenni.
+            <br>
+            <br>
+            4. Az EREDMÉNYEK menüpontban tudod követni a megtett téteket és a
+            végeredményeket, a TOPLISTA menüpontban pedig láthatod a többi Játékos
+            pozícióját és a Tiédhez képest.
+            <br>
+            <br>
+            5. A játék végén a három legtöbb pontot gyűjtő nyeri a főnyereményt, a 3 db wellness
+            hétvégét a zalakarosi MenDan Magic Spa &amp; Wellness Hotelben.
+            <br>
+            <br>
+            <a href="https://foodyshop.hu/foody_tippelj_es_utazz_jatekszabalyzat" target="_blank" style="color:#337ab7">
+                Részletes játékszabályzat</a>
+            <br>
+            <br>
+
+            JÓ SZÓRAKOZÁST ÉS SOK SIKERT KÍVÁNUNK A JÁTÉKHOZ!
+        </p>
+
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('admin.matches.title')?:'Admin Matches'}"></title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script th:inline="javascript">
+function showModal(match) {
+  document.getElementById('id').value=match.id;
+  document.getElementById('status').value=match.status;
+  document.getElementById('group').value=match.group;
+  document.getElementById('team1').value=match.team1.id;
+  document.getElementById('team2').value=match.team2.id;
+  let startDate = new Date(match.startDate);
+  startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
+  document.getElementById('startDate').value=startDate.toISOString().slice(0,16);
+  document.getElementById('result').value=match.result;
+  document.getElementById('numericResult').value=match.numericResult;
+  document.getElementById('oddsTeam1').value=match.oddsTeam1;
+  document.getElementById('oddsDraw').value=match.oddsDraw;
+  document.getElementById('oddsTeam2').value=match.oddsTeam2;
+
+  document.getElementById('result').disabled=false;
+  document.getElementById('numericResult').disabled=false;
+
+  document.getElementById('result').options[1].text=match.team1.name;
+  document.getElementById('result').options[2].text='döntetlen';
+  document.getElementById('result').options[3].text=match.team2.name;
+
+  document.getElementById('team1').disabled=true;
+  document.getElementById('team2').disabled=true;
+  document.getElementById('oddsTeam1').readOnly=true;
+  document.getElementById('oddsDraw').readOnly=true;
+  document.getElementById('oddsTeam2').readOnly=true;
+
+  document.getElementById('betModal').style.display='block';
+}
+
+
+    </script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{../js/calcDateAndLocalize.js}"></script>
+    <script th:inline="javascript">
+function showNewModal() {
+  document.getElementById('matchForm').reset();
+  document.getElementById('id').value=null;
+  document.getElementById('status').value='available';
+  document.getElementById('result').disabled=true;
+  document.getElementById('numericResult').disabled=true;
+
+  document.getElementById('team1').disabled=false;
+  document.getElementById('team2').disabled=false;
+  document.getElementById('oddsTeam1').readOnly=false;
+  document.getElementById('oddsDraw').readOnly=false;
+  document.getElementById('oddsTeam2').readOnly=false;
+
+   document.getElementById('betModal').style.display='block';
+}
+
+
+    </script>
+
+    <script th:inline="javascript">
+function validateForm() {
+  let id = document.forms["matchForm"]["id"].value;
+  let status = document.forms["matchForm"]["status"].value;
+  let result = document.forms["matchForm"]["result"].value;
+  let numericResult = document.forms["matchForm"]["numericResult"].value;
+  let team1 = $("#team1 option:selected").text();
+  let team2 = $("#team2 option:selected").text();
+
+      if (team1==team2){
+            alert("The teams cannot be the same");
+            return false;
+    }
+
+    if ((result && !numericResult) || (!result && numericResult)){
+            alert("Result and numericResult must filled together");
+            return false;
+    }
+
+    if  (status == "finished" && (!result || !numericResult)) {
+            alert("Result and numericResult must not empty if the status is finished");
+            return false;
+    }
+    if  (result && numericResult && status!="finished") {
+            alert("If result and numericResult provided, status must be finished");
+            return false;
+    }
+    if (!id && (status != "available")) {
+            alert("New match must be in available state");
+            return false;
+    }
+
+    let resultsFilled=result!=='';
+
+    if (status == "available" && resultsFilled) {
+            alert("Result and numericResult must be empty if the status is in available");
+            return false;
+    }
+
+    if (status == "in_progress" && resultsFilled) {
+            alert("Result and numericResult must be empty if the status is in progress");
+            return false;
+    }
+
+    if (status == "finished" && !resultsFilled) {
+            alert("Result and numericResult must not empty if the status is finished");
+            return false;
+    }
+
+
+  let goals = numericResult.split("-");
+  let team1Goals = Number(goals[0]);
+  let team2Goals = Number(goals[1]);
+
+    if (result=="team1" && team1Goals <= team2Goals) {
+            alert("If team 1 team won, the team 1 goals must be greater than team 2 goals");
+            return false;
+    }
+    if (result=="draw" && team1Goals != team2Goals) {
+            alert("If draw, team 1 goals equal with team 2 goals");
+            return false;
+    }
+    if (result=="team2" && team1Goals >= team2Goals) {
+            alert("If team 2 team won, the team 2 goals must be greater than team 1 goals");
+            return false;
+    }
+
+    let confirmed = confirm("Are you sure you want to save this?\n"+
+            "Team 1: "+team1  + "\nTeam 2: "+ team2+"\n"+
+            "Result: "+result +"\nNumeric result: " +numericResult);
+    if (confirmed == true) {
+        let startDate= document.forms["matchForm"]["startDate"].value
+        document.forms["matchForm"]["startDate"].type='number';
+        document.forms["matchForm"]["startDate"].value=new Date(startDate).getTime();
+        document.getElementById('team1').disabled=false;
+        document.getElementById('team2').disabled=false;
+    } else {
+        return false;
+    }
+}
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+
+    <div class="w3-container">
+        <div id="betModal" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('betModal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                    <p id="modalText"></p>
+                    <form onsubmit="return validateForm()" id="matchForm" method="POST" th:object="${match}"
+                          th:action="@{/admin/match}" class="custom-form">
+                        <input type="hidden" id="id" name="id"/>
+                        <label for="status" th:text="${#messages.msgOrNull('status')?:'status'}"></label>
+                        <select id="status" required name="status" class="select-boxes">
+                            <option disabled selected value></option>
+                            <option th:each="match : ${matchStatus}" th:value="${match}" th:text="${match}"></option>
+                        </select>
+                        <label for="group" th:text="${#messages.msgOrNull('group')?:'group'}"></label>
+                        <input required id="group" name="group"/>
+                        <label for="team1" th:text="${#messages.msgOrNull('team1')?:'team1'}"></label>
+                        <select id="team1" required name="team1" class="select-boxes">
+                            <option disabled selected value></option>
+                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                        </select>
+                        <label for="team2" th:text="${#messages.msgOrNull('team2')?:'team2'}"></label>
+                        <select id="team2" required name="team2" class="select-boxes">
+                            <option disabled selected value></option>
+                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                        </select>
+                        <br><br>
+                        <label for="startDate" th:text="${#messages.msgOrNull('startDate')?:'startDate'}"></label>
+                        <input type="datetime-local" required id="startDate" name="startDate">
+                        <br><br>
+                        <label for="result" th:text="${#messages.msgOrNull('result')?:'result'}"></label>
+                        <select id="result" name="result" class="select-boxes">
+                            <option selected value></option>
+                            <option th:each="result : ${results}" th:value="${result}" th:text="${result}"></option>
+                        </select>
+                        <label for="numericResult"
+                               th:text="${#messages.msgOrNull('numericResult')?:'numericResult'}"></label>
+                        <input placeholder="0-0" value="" id="numericResult" name="numericResult"
+                               pattern="[0-9]{1,2}-[0-9]{1,2}"/>
+                        <br><br>
+                        <label for="oddsTeam1" th:text="${#messages.msgOrNull('oddsTeam1')?:'oddsTeam1'}"></label>
+                        <input type="number" required step="0.01" min="1.0" max="999.99" id="oddsTeam1"
+                               name="oddsTeam1"/>
+                        <label for="oddsDraw" th:text="${#messages.msgOrNull('oddsDraw')?:'oddsDraw'}"></label>
+                        <input type="number" required step="0.01" min="1.0" max="999.99" id="oddsDraw" name="oddsDraw"/>
+                        <label for="oddsTeam2" th:text="${#messages.msgOrNull('oddsTeam2')?:'oddsTeam2'}"></label>
+                        <input type="number" required step="0.01" min="1.0" max="999.99" id="oddsTeam2"
+                               name="oddsTeam2"/>
+                        <br><br>
+                        <input type="submit" th:value="${#messages.msgOrNull('submit')?:'Submit'}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="center-button" th:text="${#messages.msgOrNull('newMatch')?:'new match'}"
+            th:onclick="showNewModal()">
+    </button>
+    <br><br>
+    <table class="center">
+        <tr>
+            <th th:text="${#messages.msgOrNull('status')?:'status'}"></th>
+            <th th:text="${#messages.msgOrNull('group')?:'group'}"></th>
+            <th th:text="${#messages.msgOrNull('result')?:'result'}"></th>
+            <th th:text="${#messages.msgOrNull('numericResult')?:'numeric Result'}"></th>
+            <th th:text="${#messages.msgOrNull('startDate')?:'start date'}"></th>
+            <th colspan="2" th:text="${#messages.msgOrNull('team1')?:'team1'}"></th>
+            <th colspan="2" th:text="${#messages.msgOrNull('team2')?:'team2'}"></th>
+            <th th:text="${#messages.msgOrNull('oddsTeam1')?:'oddsTeam2'}"></th>
+            <th th:text="${#messages.msgOrNull('oddsDraw')?:'draw odds'}"></th>
+            <th th:text="${#messages.msgOrNull('oddsTeam2')?:'oddsTeam2'}"></th>
+        </tr>
+        <tr th:each="match : ${matches} ">
+            <td th:text="${match.status}" class="status"></td>
+            <td th:text="${match.group}"></td>
+            <td th:text="${match.result=='team1'}?
+             ${match.team1.name} :(${match.result=='team2'}?
+            ${match.team2.name} : (${match.result=='draw'}?
+            ${#messages.msgOrNull('draw')?:'draw'}))"></td>
+            <td th:text="${match.numericResult}"></td>
+            <td th:text="${match.startDate}" class="toLocalDate"></td>
+            <td class="without-right-border">
+                <img class="img-table" th:src="${match.team1.flagLink}"
+                     onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+            </td>
+            <td class="without-left-border" th:text="${match.team1.name}"></td>
+            <td class="without-right-border">
+                <img class="img-table" th:src="${match.team2.flagLink}"
+                     onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+            </td>
+            <td class="without-left-border" th:text="${match.team2.name}"></td>
+            <td th:text="${match.oddsTeam1}"></td>
+            <td th:text="${match.oddsDraw}"></td>
+            <td th:text="${match.oddsTeam2}"></td>
+            <td>
+                <button class="center-button" th:text="${#messages.msgOrNull('edit')?:'edit'}"
+                        th:disabled=="${match.status=='finished'}"
+                        th:onclick="showModal([[${match}]])"></button>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+
+</body>
+
+</html>

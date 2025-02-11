@@ -1,0 +1,286 @@
+@font-face {
+  font-family: lato;
+  src: url(https://fonts.google.com/specimen/Lato) format("truetype");
+}
+
+* {
+ font-family: lato;
+}
+
+body {
+  background-color: #c9dce2 !important;
+}
+
+.center-button {
+	display: block;
+	margin: auto;
+	background: bisque;
+}
+
+.header-centered-text {
+	text-align: center;
+	font-weight: bold;
+}
+
+.bottom-padding{
+border-bottom: 1pt solid black;
+}
+
+.circle-input {
+	border-radius: 50px !important;
+	margin-bottom: 10px !important;
+}
+button[disabled], html input[disabled] {
+    background: gray !important;
+}
+
+.radius-button-reg {
+    display: inline;
+    color: white;
+    border-radius: 50px;
+    padding: 5px;
+    padding-right: 35px;
+    padding-left: 35px;
+    text-align:center;
+    font-weight: bold;
+    background: red;
+}
+.footer-center{
+    text-align: center;
+    bottom:0;
+}
+
+.radius-button {
+    color: white;
+    border-radius: 50px;
+    padding: 5px;
+    padding-right: 35px;
+    padding-left: 35px;
+    font-weight: bold;
+}
+.red-text{
+ color: #e4002b;
+}
+
+.center-aligned-text {
+	text-align: center;
+}
+
+#register {
+	display: inline;
+}
+
+.center {
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+}
+
+button[disabled],
+html input[disabled] {
+	cursor: default;
+	background: gray;
+}
+
+table,
+th,
+td {
+	border: 0px solid black;
+}
+
+td,
+th {
+	text-align: center !important;
+	vertical-align: middle;
+}
+
+.foodyTableCell{
+padding: 20px 10px 20px 20px;
+}
+
+.betButton{
+border-radius: 40%;
+background: #e4002b;
+color: white;
+border: none;
+width: 40px;
+}
+
+table {
+	width: 50%;
+}
+
+.custom-label {
+	width: 100px;
+}
+
+.select-boxes {
+	border: 5px solid darkolivegreen;
+	background: blanchedalmond;
+}
+
+.custom-form {
+	font-size: smaller;
+}
+.team-input {
+  width: 100%;
+    }
+.centerItem {
+    width: 30%;
+    display: block;
+    margin: 0 auto;
+    }
+.img-table {
+  max-width:50px;
+  max-height:45px;
+  width: auto;
+  height: auto;
+  padding: 2px;
+}
+.same-width-label {
+ display: inline-block;
+ width: 200px;
+ text-align: right;
+}
+.code-upload-form{
+ border-style: solid;
+}
+.modalText{
+font-weight: bold;
+display: inline;
+padding-right: 50px;
+padding-left: 10px;
+}
+
+.actual-code-upload{
+ display: contents;
+}
+.text-center-align{
+ text-align: center
+}
+.guessValue{
+ font-size: x-large;
+ color:#e4002b;
+ text-transform: uppercase;
+}
+.without-left-border {
+    border-left: 0px solid #FFFFFF;
+}
+.without-right-border {
+    border-right: 0px solid #FFFFFF;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #e4002b;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: orange;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+
+.logout{
+float:right;
+}
+
+.user-info{
+float: right;
+margin-right: 2%;
+}
+
+.foody_logo {
+ width: 20%;
+}
+.foodynav{
+background: #e4002b;
+}
+.boldText {
+    font-weight : bold;
+    font-size: large;
+}
+.auto-width{
+    width: 50% !important;
+}
+.flags{
+    display: flex;
+    justify-content: center;
+}
+/* When the screen is less than 900 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 900px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 900px) {
+  .topnav.responsive {
+  position: relative;
+  }
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+    .logout {
+      float: inherit;
+    }
+    .radius-button{
+      display:block;
+    }
+    .radius-button {
+        color: white;
+        border-radius: 50px;
+        padding: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+        font-weight: bold;
+    }
+    .foody_logo {
+     width: 70%;
+    }
+    .center{
+    width: 100%;
+    }
+    .btn-wrapper{
+    width:max-content
+    }
+    .modalResponsive{
+    margin-left:auto;
+    margin-right:auto;
+    padding-right: 0;
+    padding-left: 0;
+    }
+}

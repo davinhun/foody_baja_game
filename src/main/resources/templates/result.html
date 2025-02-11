@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('bet.title')?:'Bet page'}"></title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript" th:inline="javascript" th:src="@{../js/calcDateAndLocalize.js}"></script>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+    <h1 class="center header-centered-text"> Eredmények</h1>
+    <br>
+
+    <div style="overflow-x: auto;">
+        <table class="center" style="width: 65%;">
+            <tr style="font-size: small;">
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('status')?:'status'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('group')?:'group'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('result')?:'result'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('numericResult')?:'numeric Result'}"></th>
+                <th class="foodyTableCell" colspan="2" th:text="${#messages.msgOrNull('team1')?:'team1'}"></th>
+                <th class="foodyTableCell" colspan="2" th:text="${#messages.msgOrNull('team2')?:'team2'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('guess')?:'My guess'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('bet')?:'My bet'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('winning')?:'Winning'}"></th>
+                <th class="foodyTableCell" th:text="${#messages.msgOrNull('possibleWinning')?:'possible Winning'}"></th>
+            </tr>
+            <tr class="header-centered-text bottom-padding" th:each="model : ${matchesWithBets} ">
+                <td th:text="${model.match.status}" class="status foodyTableCell"></td>
+                <td th:text="${model.match.group}" class="foodyTableCell"></td>
+                <td th:text="${model.match.result=='team1'}?
+             ${model.match.team1.name} :(${model.match.result=='team2'}?
+            ${model.match.team2.name} : (${model.match.result=='draw'}?
+            ${#messages.msgOrNull('draw')?:'draw'}))" class="foodyTableCell"></td>
+                <td th:text="${model.match.numericResult}" class="foodyTableCell"></td>
+                <td class="foodyTableCell">
+                    <img class="img-table" th:src="${model.match.team1.flagLink}"
+                         onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+                </td>
+                <td class="foodyTableCell" th:text="${model.match.team1.name}"></td>
+                <td class="foodyTableCell">
+                    <img class="img-table" th:src="${model.match.team2.flagLink}"
+                         onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+                </td>
+                <td class="foodyTableCell" th:text="${model.match.team2.name}"></td>
+                <td th:text=" ${model.bet != null} ?
+            (${model.bet.guess=='team1'} ? ${model.match.team1.name}
+            :(${model.bet.guess=='team2'} ? ${model.match.team2.name}
+            :(${model.bet.guess=='draw'} ? ${#messages.msgOrNull('draw')?:'draw'})))
+            :' '" class="foodyTableCell"></td>
+                <td class="foodyTableCell">
+                    <p th:text="${model.bet != null} ? ${model.bet.point} : ' '" style="margin: 0;"></p>
+                </td>
+                <td class="foodyTableCell">
+                    <p th:text="${model.bet != null} ? ${model.bet.winning} : ' '" style="color: green;margin: 0;"></p>
+                </td>
+                <td class="foodyTableCell">
+                    <p th:text="${model.bet != null} ? ${model.bet.possibleWinning} : ' '"
+                       style="color: orange;margin: 0;"></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

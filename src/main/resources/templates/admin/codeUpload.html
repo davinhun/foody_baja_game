@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('admin.code.upload.title')?:'Admin code upload'}"></title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script th:inline="javascript">
+        $(window).on('load', function(e){
+  let elements = document.getElementsByClassName('toLocalDateValue')
+    for (const element of elements){
+        let startDate = new Date(parseInt(element.getAttribute("dateValue")));
+            startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
+        let tempDate=startDate.toISOString().slice(0,10);
+            element.value=tempDate;
+        }
+})
+
+
+
+
+    </script>
+
+    <script th:inline="javascript">
+function showNewModal() {
+  document.getElementById('matchForm').reset();
+  document.getElementById('id').value=null;
+  document.getElementById('status').value='available';
+
+  document.getElementById('team1').disabled=false;
+  document.getElementById('team2').disabled=false;
+  document.getElementById('oddsTeam1').readOnly=false;
+  document.getElementById('oddsDraw').readOnly=false;
+  document.getElementById('oddsTeam2').readOnly=false;
+
+   document.getElementById('betModal').style.display='block';
+}
+
+
+
+    </script>
+    <script th:inline="javascript">
+function validateCodeUploadForm() {
+  let codeUploadValue = document.forms["codeUploadForm"]["codeValue"].value;
+  let codeStartValue = document.forms["codeUploadForm"]["codeStartDate"].value;
+  let codeEndValue = document.forms["codeUploadForm"]["codeEndDate"].value;
+
+    if (codeEndValue <= codeStartValue) {
+            alert("End date must be greater than start date.");
+            return false;
+    }
+
+  let confirmed = confirm("Are you sure you want to save this?\n"+
+            "Code upload value: "+ codeUploadValue+"\n"+
+            "Start date: "+ codeStartValue+"\n"+
+            "End date: "+ codeEndValue);
+
+    if (confirmed == true) {
+        document.forms["codeUploadForm"]["codeStartDate"].type='number';
+        document.forms["codeUploadForm"]["codeStartDate"].value=new Date(codeStartValue).getTime();
+        document.forms["codeUploadForm"]["codeEndDate"].type='number';
+        document.forms["codeUploadForm"]["codeEndDate"].value=new Date(codeEndValue).getTime();
+    } else {
+        document.getElementById('codeUploadForm').reset();
+        return false;
+    }
+}
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+
+
+    <div class="center">
+        <form onsubmit="return validateCodeUploadForm()" id="codeUploadForm" method="POST"
+              th:object="${codeUploadModel}"
+              th:action="@{/admin/codeUpload}" class="custom-form code-upload-form">
+
+            <div class="text-center-align">
+                <label for="actualCodeUploadValue"
+                       th:text="${#messages.msgOrNull('actualCodeUploadValue')?:'actualCodeUploadValue'}"></label>
+                <p id="actualCodeUploadValue" class="actual-code-upload" th:text="${actual_code_upload_value}"></p>
+            </div>
+
+            <p>A kezdési időszak az adott napon 0:00-tól érvényes a végső nap 0:00ig</p>
+            <p>Pl: Május 13 és május 14-én szeretnénk 5000 pontot adni egy feltöltésért, akkor
+                a kezdést május 13-ra, a végét pedig május 15-re kell állítani.
+                Ez esetben május 13 0:00 tól május 15 0:00-ig lesz érvényes az időszak</p>
+            <label for="codeStartDate" class="same-width-label"
+                   th:text="${#messages.msgOrNull('codeStartDate')?:'codeStartDate'}"></label>
+            <input type="date" required id="codeStartDate" name="codeStartDate" class="toLocalDateValue"
+                   th:attr="dateValue=${codeUpload==null? null:codeUpload.codeStartDate}">
+            <br><br>
+            <label for="codeEndDate" class="same-width-label"
+                   th:text="${#messages.msgOrNull('codeEndDate')?:'codeEndDate'}"></label>
+            <input type="date" required id="codeEndDate" name="codeEndDate" class="toLocalDateValue"
+                   th:attr="dateValue=${codeUpload==null? null:codeUpload.codeEndDate}">
+            <br><br>
+            <label for="codeValue" class="same-width-label"
+                   th:text="${#messages.msgOrNull('codeUploadValue')?:'Code upload value'}"></label>
+            <input type="number" required step="1" min="100" max="5000"
+                   th:value="${codeUpload==null? null:codeUpload.codeValue}" id="codeValue"
+                   name="codeValue"/>
+            <br><br>
+            <input class="center-button" type="submit" th:value="${#messages.msgOrNull('submit')?:'Submit'}">
+        </form>
+    </div>
+    <br><br>
+
+</div>
+
+
+</body>
+
+</html>

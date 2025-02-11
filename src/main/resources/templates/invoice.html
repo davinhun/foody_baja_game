@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('invoice.title')?:'Invoices'}"></title>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/calcDateAndLocalize.js}"></script>
+    <script th:inline="javascript">
+function validateForm() {
+  let apCode = document.forms["invoiceForm"]["apCode"].value;
+  let blockCode = document.forms["invoiceForm"]["blockCode"].value;
+  let blockDate = document.forms["invoiceForm"]["blockDate"].value;
+
+    let confirmed = confirm("Biztosan fel szeretnéd tölteni?\n"+
+            "AP kód: "+ apCode+"\n"  +
+            "Blokk kód: "+ blockCode+"\n"+
+            "Blokk dátum: "+ blockDate);
+    if (confirmed == true) {
+        let blockDateNumber= document.forms["invoiceForm"]["blockDate"].value
+        document.forms["invoiceForm"]["blockDate"].type='number';
+        document.forms["invoiceForm"]["blockDate"].value=new Date(blockDateNumber).getTime();
+    } else {
+        return false;
+    }
+}
+
+
+    </script>
+    <script th:inline="javascript">
+        $(window).on('load', function(e){
+  document.getElementById('blockDate').max=new Date().toISOString().slice(0,-14);
+})
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+<div layout:fragment="content">
+    <br>
+    <form onsubmit="return validateForm()" id="invoiceForm" method="POST" th:object="${invoice}"
+          th:action="@{/invoice}" class="form-signin center">
+        <br><br>
+        <div class="text-center-align">
+            <h2 style="font-weight: bold;"
+                th:text="${#messages.msgOrNull('actualCodeUploadValue')?:'actualCodeUploadValue'}+${actual_code_upload_value}"></h2>
+        </div>
+        <br><br>
+        <div style="text-align: center;">
+            <input th:placeholder="${#messages.msgOrNull('apCode')?:'Ap Code'}"
+                   class="auto-width form-control circle-input center"
+                   size="50" maxlength="50" id="apCode" required name="apCode"/>
+            <input th:placeholder="${#messages.msgOrNull('blockCode')?:'block Code'}"
+                   class="auto-width form-control circle-input center" size="50" maxlength="50" id="blockCode" required
+                   name="blockCode"/>
+            <input th:placeholder="${#messages.msgOrNull('blockDate')?:'block Date'}"
+                   class="auto-width form-control circle-input center" type="date" required id="blockDate"
+                   name="blockDate">
+        </div>
+        <div class="btn-wrapper center center-aligned-text">
+            <button class="radius-button" style="background: #e4002b; border-style: none;" type="submit"
+                    th:disabled=="${uploadDisabled}"
+                    th:text="${#messages.msgOrNull('invoiceSubmit')?:'code upload'}"></button>
+        </div>
+    </form>
+    <div style="overflow-x:auto;">
+        <table class="center">
+            <tr>
+                <th th:text="${#messages.msgOrNull('apCode')?:'ap code'}"></th>
+                <th th:text="${#messages.msgOrNull('blockCode')?:'block code'}"></th>
+                <th th:text="${#messages.msgOrNull('blockDate')?:'block date'}"></th>
+                <th th:text="${#messages.msgOrNull('uploadDate')?:'upload date'}"></th>
+                <th th:text="${#messages.msgOrNull('receivedPoint')?:'received Point'}"></th>
+            </tr>
+            <tr th:each="invoice : ${invoices} ">
+                <td th:text="${invoice.apCode}"></td>
+                <td th:text="${invoice.blockCode}"></td>
+                <td th:text="${#dates.format(new java.util.Date(invoice.blockDate), 'yyyy.MM.dd')}"></td>
+                <td th:text="${invoice.uploadDate}" class="toLocalDate"></td>
+                <td th:text="${invoice.point}"></td>
+            </tr>
+        </table>
+    </div>
+    <br><br><br><br>
+
+</div>
+
+
+</body>
+
+</html>

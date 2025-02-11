@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('toplist.title')?:'Toplist'}"></title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script th:inline="javascript">
+        $(window).on('load', function(e){
+let brElement = document.createElement("BR");
+let thirdElement = document.getElementById("third");
+thirdElement.after(brElement);
+})
+
+    </script>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+    <h1 class="center header-centered-text"> Toplista</h1>
+    <br><br>
+
+    <table class="center">
+        <tr th:each="user,iter : ${users}" th:attr="class=${iter.index<3 ? 'red-text' : ''},
+            id=${iter.index==2 ? 'third' : ''}"
+            style="font-weight: bold;">
+            <td th:text="${iter.index+1+'.'}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.availablePoints+' pont'}"></td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('prices.title')?:'Prices'}"></title>
+    <style th:inline="text">
+    body{
+        background-image: url(/images/foodypromo_hatter.jpg);
+        background-size: cover;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/prices.css}"/>
+</head>
+
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+<div layout:fragment="content">
+    <div class="clearfix">
+        <div class="left">
+            <div>
+                <div class="left-image">
+                    <img th:src="@{/images/prices/nyeremeny_4.jpg}" style="width: 100%;">
+                </div>
+                <div class="left-image">
+                    <img th:src="@{/images/prices/nyeremeny_2.jpg}" style="width: 100%;">
+                </div>
+                <div class="left-image">
+                    <img th:src="@{/images/prices/nyeremeny_5.jpg}" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="middle center">
+            <div>
+                <img class="hideMobile" th:src="@{/images/prices/hagymas_barnarizs.png}"
+                     style="width: 25%;transform: rotate(40deg);margin-left: -20px;float: left;">
+
+                <p style="font-size: x-large;color: red">
+                    <b>Foody „Tippelj és utazz!”</b> <br>
+                    versenyünk során nemcsak az exkluzív főnyereményeink egyike
+                    lehet a Tiéd, hanem egyéb értékes nyereményeket is kisorsolunk a világbajnokság időtartama
+                    alatt, így ha érdekel a futball világa és jók a megérzéseid, semmiképp nem érdemes
+                    kihagynod ezt a megmérettetést!<br><br>
+
+                    <b>Főnyeremény:</b> <br>
+                    A tippverseny lezárultával a toplista élén álló 3 játékos gazdagodik 1-1-1 darab 2 főre szóló
+                    wellness hétvégével a csodálatos MenDan Magic Spa &amp; Wellness Hotelbe Zalakarosra, ahol a
+                    szerencsés nyerteseknek nemcsak felüdülést és megnyugvást garantálunk, hanem egy igazi
+                    testi-lelki felfrissülést.<br>
+                </p>
+            </div>
+
+            <div class="center" style="text-align: center;">
+                <img th:src="@{/images/prices/logo.png}" class="foody_logo" style="width: 70%;">
+            </div>
+
+            <p style="font-size: x-large;color: red">
+                <b>Egyéb értékes nyeremények:</b> <br>
+                Hogy ne csak a kényeztető pihenésről gondoskodjunk, hanem a mérkőzésekhez
+                elengedhetetlen ínycsiklandozó ropogtatnivalókról is, a világbajnokság időtartama alatt
+                kisorsolása kerül 4 darab Foody Snack Box, melyekkel garantáltan jó hangulatban telik majd
+                a szurkolás.<br><br>
+
+                <b>Játssz Te is, hogy ne maradj le az értékes nyereményekről!</b>
+            </p>
+
+
+            <div>
+                <div>
+                    <div class="column">
+                        <img th:src="@{/images/prices/pari_oregano_flips.png}" class="foody_logo" style="width: 22%;">
+                    </div>
+                    <div class="column">
+                        <img th:src="@{/images/prices/ketchup.png}" class="foody_logo" style="width: 25%;">
+                    </div>
+                    <div class="column">
+                        <img th:src="@{/images/prices/sajtos.png}" class="foody_logo" style="width: 20%;">
+                    </div>
+                    <div class="column">
+                        <img th:src="@{/images/prices/sos.png}" class="foody_logo" style="width: 20%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right">
+            <div>
+                <div>
+                    <img th:src="@{/images/prices/mogyis_flips.png}"
+                         style="width: 70%;transform: rotate(-40deg);margin-top: -100px;margin-bottom: -60px;">
+                </div>
+                <div class="right-image">
+                    <img th:src="@{/images/prices/nyeremeny_1.jpg}" style="width: 130%;">
+                </div>
+                <div class="right-image">
+                    <img th:src="@{/images/prices/nyeremeny_3.jpg}" style="width: 130%;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

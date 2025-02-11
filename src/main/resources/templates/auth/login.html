@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
+      layout:decorate="~{fragments/nonLoggedIn}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('login.page.title')?:'Login'}"></title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style th:inline="text">
+    body{
+        background-image: url(/images/foodypromo_v2.jpg);
+        background-size: cover;
+    }
+
+    @media screen and (max-width: 900px) {
+    body {
+        background-image: url(/images/foodypromo_hatter.jpg);
+      }
+    }
+
+
+
+    </style>
+
+    <script th:inline="javascript">
+function showPasswordRequestModal() {
+  document.getElementById('passwordForm').reset();
+  document.getElementById('passwordModal').style.display='block';
+}
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    <script>
+$(document).ready(function () {
+    $("#passwordForm").submit(function () {
+        $("#registerConfirmBtn").attr("disabled", true);
+        return true;
+    });
+});
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="w3-container">
+        <div id="passwordModal" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('passwordModal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                    <form class="center-aligned-text" method="POST" th:action="@{/register/sendPasswordReset}"
+                          id="passwordForm">
+                        <p>Jelszó visszaállítás az alábbi e-mail címhez:</p>
+                        <input class="circle-input" type="email" required id="emailAddress" name="emailAddress"
+                               th:placeholder="${#messages.msgOrNull('email')?:'e-mail'}">
+                        <br><br>
+                        <div class="center" style="text-align:center;">
+                            <input class="radius-button" style="background: #e4002b; display: initial" type="submit"
+                                   id="registerConfirmBtn"
+                                   th:value="${#messages.msgOrNull('submit')?:'Submit'}">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div sec:authorize="isAnonymous()">
+
+        <div class="center" style="text-align: center;">
+            <img th:src="@{/images/foody_logo.svg}" class="foody_logo">
+            <h1 class="header-centered-text" style="font-size: xxx-large;">
+                <span th:text="${#messages.msgOrNull('betAndTravel')?:'betAndTravel'}"></span>
+            </h1>
+        </div>
+
+        <form name="login" th:action="@{/login}" method="post" class="form-signin center">
+
+            <div th:if="${regSuccess}" class="alert alert-success"><span
+                    th:text="${#messages.msgOrNull('successFullReg')?:'Reg success'}"></span></div>
+            <div th:if="${emailConfirmed}" class="alert alert-success"><span
+                    th:text="${#messages.msgOrNull('emailConfirmed')?:'Email confirmed'}"></span></div>
+            <div th:if="${passwordChanged}" class="alert alert-success"><span
+                    th:text="${#messages.msgOrNull('passwordChanged')?:'passwordChanged'}"></span></div>
+            <div th:if="${resetRequest}" class="alert alert-success"><span
+                    th:text="${#messages.msgOrNull('resetRequest')?:'resetRequest'}"></span></div>
+            <div id="err" th:if="${param.error}" class="alert alert-danger"><span
+                    th:text="${#messages.msgOrNull('loginError')?:'Wrong email or password or not confirmed email'}"></span>
+            </div>
+            <div th:if="${param.error} and ${session} and ${session['SPRING_SECURITY_LAST_EXCEPTION']}
+                and ${session['SPRING_SECURITY_LAST_EXCEPTION'].message=='Already registered with this email'}"
+                 class="alert alert-dismissible alert-danger error">
+                <span>Already registered with this email</span>
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success"><span
+                    th:text="${#messages.msgOrNull('loggedOut')?:'logged out'}"></span></div>
+
+
+            <h2 class="header-centered-text"><span th:text="${#messages.msgOrNull('login')?:'login'}"></span></h2>
+            <br>
+            <div style="text-align: center;">
+                <label for="register"
+                       th:text="${#messages.msgOrNull('alreadyRegistered')?:'Already registered?'}"></label>
+                <div class="center radius-button-reg" style="background: #e4002b;">
+                    <p id="register"><a href="/register"><u
+                            th:text="${#messages.msgOrNull('register')?:'register'}"></u></a></p>
+                </div>
+            </div>
+            <br>
+
+            <div style="text-align: center;">
+                <input type="email" id="email" name="email" class="form-control circle-input center"
+                       th:placeholder="${#messages.msgOrNull('email')?:'e-mail'}"
+                       required/>
+                <input type="password" id="password" name="password" class="form-control circle-input center"
+                       th:placeholder="${#messages.msgOrNull('password')?:'password'}"
+                       required/>
+            </div>
+            <br>
+            <div class="btn-wrapper center center-aligned-text">
+                <input class="radius-button" style="background: #e4002b; border-style: none;" type="submit"
+                       th:value="${#messages.msgOrNull('loginbtn')?:'Login'}">
+            </div>
+        </form>
+        <div class="center" style="text-align:center;">
+            <p style="text-decoration: underline;" th:text="${#messages.msgOrNull('passwordReset')?:'passwordReset'}"
+               th:onclick="showPasswordRequestModal( )"></p>
+        </div>
+
+    </div>
+    <div sec:authorize="!isAnonymous()">
+        <script>document.location.href="/";</script>
+    </div>
+</div>
+</body>
+
+</html>

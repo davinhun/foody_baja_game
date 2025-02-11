@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('team.title')?:'Teams'}"></title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script th:inline="javascript">
+function showNewModal() {
+  document.getElementById('teamForm').reset();
+  document.getElementById('id').value=null;
+  document.getElementById('name').value=null;
+  document.getElementById('flagLink').value=null;
+  document.getElementById('name').removeAttribute('readonly')
+
+   document.getElementById('teamModal').style.display='block';
+}
+
+    </script>
+    <script th:inline="javascript">
+function showModal(team) {
+  document.getElementById('teamForm').reset();
+  document.getElementById('id').value=team.id;
+  document.getElementById('name').value=team.name;
+  document.getElementById('name').setAttribute('readonly','true')
+
+  document.getElementById('flagLink').value=team.flagLink;
+  document.getElementById('teamModal').style.display='block';
+}
+
+
+    </script>
+</head>
+
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+
+    <div class="w3-container">
+        <div id="teamModal" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('teamModal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                    <form id="teamForm" method="POST" th:object="${team}"
+                          th:action="@{/admin/team}" class="custom-form">
+                        <input type="hidden" id="id" name="id"/>
+                        <br><br>
+                        <label for="name" th:text="${#messages.msgOrNull('name')?:'name'}"></label>
+                        <input readonly id="name" required name="name"/>
+                        <br><br>
+                        <label for="flagLink" th:text="${#messages.msgOrNull('flagLink')?:'flagLink'}"></label>
+                        <input class="team-input" type="url"
+                               pattern="(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|svg|bmp)"
+                               id="flagLink" required name="flagLink"/>
+                        <br>
+                        <br>
+                        <input class="centerItem" type="submit" th:value="${#messages.msgOrNull('submit')?:'Submit'}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    <table class="center">
+        <tr>
+            <th th:text="${#messages.msgOrNull('name')?:'name'}"></th>
+            <th th:text="${#messages.msgOrNull('flag')?:'flag'}"></th>
+        </tr>
+        <tr th:each="team : ${teams} ">
+            <td th:text="${team.name}"></td>
+            <td>
+                <img class="img-table" th:src="${team.flagLink}"
+                     onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Unknown_flag_-_European_version.png';"/>
+            </td>
+            <td>
+                <button class="center-button" th:text="${#messages.msgOrNull('edit')?:'edit'}"
+                        th:onclick="showModal([[${team}]])"></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+
+</html>

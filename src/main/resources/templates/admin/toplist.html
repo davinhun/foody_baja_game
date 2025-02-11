@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/general}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('toplist.title')?:'Toplist'}"></title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    <script th:inline="javascript">
+function showModal(user) {
+document.getElementById('banForm').reset();
+  document.getElementById('banUserId').value=user.id;
+
+document.getElementById('banText').innerText = "Az alábbi user bannolása/bannolás feloldása\n" +"Név: "+ user.name + "\n email: "+user.email;
+
+  document.getElementById('banModal').style.display='block';
+}
+
+    </script>
+</head>
+<body>
+
+
+<div th:insert="fragments/general.html :: nav-bar"></div>
+
+
+<div layout:fragment="content">
+
+    <div class="w3-container">
+        <div id="banModal" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="document.getElementById('banModal').style.display='none'"
+                          class="w3-button w3-display-topright">&times;</span>
+                    <form th:action="@{/admin/banUser}" id="banForm"
+                          method="post" class="form-signin center">
+
+                        <h2 class="header-centered-text" required="true"><span
+                                th:text="${#messages.msgOrNull('banUser')?:'BanUser'}"></span>
+                        </h2>
+                        <br>
+                        <div style="text-align: center;">
+                            <p id="banText"></p>
+                            <input type="hidden" id="banUserId" name="banUserId"/>
+                        </div>
+                        <div class="btn-wrapper center center-aligned-text">
+                            <input class="radius-button" style="background: #e4002b;" type="submit"
+                                   th:value="${#messages.msgOrNull('submit')?:'submit'}">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="center">
+        <tr>
+            <th th:text="${#messages.msgOrNull('name')?:'name'}"></th>
+            <th th:text="${#messages.msgOrNull('email')?:'email'}"></th>
+            <th th:text="${#messages.msgOrNull('id')?:'id'}"></th>
+            <th th:text="${#messages.msgOrNull('oauthId')?:'oauthId'}"></th>
+            <th th:text="${#messages.msgOrNull('points')?:'points'}"></th>
+            <th th:text="${#messages.msgOrNull('lastEvent')?:'lastEvent'}"></th>
+            <th th:text="${#messages.msgOrNull('lastChange')?:'lastChange'}"></th>
+            <th th:text="${#messages.msgOrNull('Email megerositve')?:'Email megerositve'}"></th>
+            <th th:text="${#messages.msgOrNull('uploadedCodes')?:'uploadedCodes'}"></th>
+            <th th:text="${#messages.msgOrNull('banned')?:'banned?'}"></th>
+        </tr>
+        <tr th:each="user : ${users} ">
+            <td><a th:href="@{'/admin/user/' + ${user.id}}" th:text="${user.name}">link</a>
+            </td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.oauthId}"></td>
+            <td th:text="${user.availablePoints}"></td>
+            <td th:text="${user.lastEvent}"></td>
+            <td th:text="${user.lastChange}"></td>
+            <td th:text="${user.emailConfirmed}"></td>
+            <td><a th:href="@{'/admin/invoice/' + ${user.id}}"
+                   th:text="${#messages.msgOrNull('uploadedCodes')?:'uploadedCodes'}">uploadedCodes</a>
+            </td>
+            <td th:text="${user.banned}" th:onclick="showModal([[${user}]])"></td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+
+</html>

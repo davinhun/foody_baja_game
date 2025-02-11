@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="en"
+      layout:decorate="~{fragments/nonLoggedIn}">
+
+<head>
+    <title th:text="${#messages.msgOrNull('register')?:'register'}"></title>
+    <style th:inline="text">
+    body{
+        background-image: url(/images/foodypromo_v2.jpg);
+        background-size: cover;
+    }
+    @media screen and (max-width: 900px) {
+    body {
+        background-image: url(/images/foodypromo_hatter.jpg);
+      }
+    }
+
+    </style>
+    <script th:inline="javascript">
+function validateForm() {
+  let pw = document.forms["registration"]["password"].value;
+  let pw2 = document.forms["registration"]["password2"].value;
+
+    if (pw !== pw2) {
+        alert("Passwords are different")
+        return false;
+    }
+}
+
+
+
+
+    </script>
+    <script>
+$(document).ready(function () {
+    $("#registerForm").submit(function () {
+        $("#registerConfirmBtn").attr("disabled", true);
+        return true;
+    });
+});
+
+
+
+    </script>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div sec:authorize="isAnonymous()">
+
+        <div class="center" style="text-align: center;">
+            <img th:src="@{/images/foody_logo.svg}" class="foody_logo">
+            <h1 class="header-centered-text" style="font-size: xxx-large;">
+                <span th:text="${#messages.msgOrNull('betAndTravel')?:'betAndTravel'}"></span>
+            </h1>
+        </div>
+
+        <form name="registration" onsubmit="return validateForm()" th:action="@{/register}" th:object="${user}"
+              method="post" class="form-signin center" id="registerForm">
+
+            <div th:if="${bindingErrors}" class="alert alert-danger">
+                <article th:each="bindingError : ${bindingErrors}">
+                    <span th:text="${bindingError.defaultMessage}"> error </span>
+                </article>
+            </div>
+
+            <h2 class="header-centered-text" required="true"><span
+                    th:text="${#messages.msgOrNull('register')?:'Register'}"></span>
+            </h2>
+            <br>
+            <div style="text-align: center;">
+                <input type="text" maxlength="500" id="name" name="name" class="form-control circle-input center"
+                       th:placeholder="${#messages.msgOrNull('name')?:'name'}" required/>
+                <input type="email" maxlength="500" id="email" name="email" class="form-control circle-input center"
+                       placeholder="E-mail"
+                       required/>
+                <input type="password" maxlength="500" id="password" name="password"
+                       class="form-control circle-input center"
+                       th:placeholder="${#messages.msgOrNull('password')?:'password'}"
+                       required minlength="6"/>
+                <input type="password" maxlength="500" id="password2" name="password2"
+                       class="form-control circle-input center"
+                       th:placeholder="${#messages.msgOrNull('password-again')?:'password again'}"
+                       required minlength="6"/>
+            </div>
+            <div class="btn-wrapper center center-aligned-text">
+                <input class="radius-button" style="background: #e4002b;" type="submit" id="registerConfirmBtn"
+                       th:value="${#messages.msgOrNull('register')?:'register'}">
+            </div>
+
+            <div class="center" style="display:flex;">
+                <input type="checkbox" required id="agree"/>
+                <label for="agree" style="padding-left:10px;">
+                    <a href="https://foodyshop.hu/foody_tippelj_es_utazz_jatekszabalyzat" target="_blank">
+                        A részvételei és játékszabályzatot elfogadom</a>
+                </label>
+
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>
